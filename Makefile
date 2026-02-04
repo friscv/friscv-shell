@@ -7,7 +7,7 @@ TARGET := $(BUILD_DIR)/prog
 APP_SRCS := src/main.c
 ALL_SRCS := $(FRISCV_CRT0) $(APP_SRCS) $(FRISCV_SRCS)
 
-.PHONY: all clean
+.PHONY: all clean compile_commands.json
 
 ifeq ($(PLATFORM),friscv)
 ELF := $(TARGET).elf
@@ -36,3 +36,12 @@ endif
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+compile_commands.json:
+	@echo '[' > $@
+	@echo '  {' >> $@
+	@echo '    "directory": "$(CURDIR)",' >> $@
+	@echo '    "file": "src/main.c",' >> $@
+	@echo '    "arguments": ["clang", "-c", "--target=riscv32-unknown-elf", "-march=rv32i", "-mabi=ilp32", "-ffreestanding", "-fno-builtin", "-nostdlib", "-nostartfiles", "-Isdk/include", "-Wall", "-Wextra", "src/main.c"]' >> $@
+	@echo '  }' >> $@
+	@echo ']' >> $@
