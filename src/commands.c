@@ -1,4 +1,5 @@
 #include "uart.h"
+#include "commands.h"
 
 static int str_cmp(const char *s1, const char *s2) {
     while (*s1 && (*s1 == *s2)) {
